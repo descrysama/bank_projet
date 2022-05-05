@@ -3,18 +3,20 @@ import { useState } from 'react';
 
 const registerURL = 'http://127.0.0.1:8000/api/users';
 
+console.log(process.env);
+
 const Register = () => {
 
   const [Status, setStatus] = useState();
 
   const SubmitHandler = (e) => {
     e.preventDefault();
-
     axios.post(registerURL, {
-      name: e.target.username.value,
-      email: e.target.email.value,
-      password: e.target.password.value
-    }).then((response) => setStatus(response.data)).catch(function(error) {console.log(error)});
+        name: e.target.username.value,
+        email: e.target.email.value,
+        password: e.target.password.value,
+        password_confirmation: e.target.password_confirmation.value
+    }).then((response) => setStatus(response));
   }
 
     return (
