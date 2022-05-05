@@ -14,10 +14,8 @@ const Register = () => {
       name: e.target.username.value,
       email: e.target.email.value,
       password: e.target.password.value
-    }).then((response) => setStatus(response.data));
+    }).then((response) => setStatus(response.data)).catch(function(error) {console.log(error)});
   }
-
-
 
     return (
         <div className="d-flex w-100 justify-content-center align-items-center text-center p-3 flex-column">
