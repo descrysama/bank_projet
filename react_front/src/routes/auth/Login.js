@@ -13,7 +13,7 @@ const Login = () => {
                   <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" required/>
                   <label for="floatingInput">Adresse Mail</label>
                 </div>
-                <div class="form-floating">
+                <div className="form-floating">
                   <input type="password" className="form-control" id="floatingPassword" placeholder="mot de passe" required/>
                   <label for="floatingPassword">Mot de passe</label>
                 </div>
