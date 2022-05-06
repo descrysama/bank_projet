@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\RegisterController;
+use App\Http\Controllers\API\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,5 +20,6 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['cors'])->group(function () {
-    Route::apiResource('users', UserController::class);
+    Route::post('register', [RegisterController::class, 'store']);
+    Route::post('login', [LoginController::class, 'login']);
 });

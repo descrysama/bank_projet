@@ -12,7 +12,7 @@ const Register = () => {
   const SubmitHandler = (e) => {
     e.preventDefault();
     if (e.target.username.value && e.target.email.value && e.target.password.value && e.target.password_confirmation.value) {
-      axios.post(`${process.env.REACT_APP_API_URL}users`, {
+      axios.post(`${process.env.REACT_APP_API_URL}register`, {
         name: e.target.username.value,
         email: e.target.email.value,
         password: e.target.password.value,
