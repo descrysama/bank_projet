@@ -1,21 +1,22 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Accueil from "./routes/Accueil";
 import Transactions from "./routes/Transactions";
 import Login from "./routes/auth/Login";
 import Register from "./routes/auth/Register";
+import { useState } from "react";
 
 function App() {
 
+  const [isAuth, setIsAuth] = useState(false);
 
   return (
     <BrowserRouter>
-    <Navbar/>
+    <Navbar isAuth={isAuth}/>
       <Routes>
-        <Route path='/' element={<Accueil />}></Route>
-        <Route path='/transactions' element={<Transactions />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/register' element={<Register />}></Route>
+        <Route path='/transactions' element={<Transactions />}></Route>
+        <Route path="" element={<Navigate to="/login" />} />
       </Routes>
     </BrowserRouter>
   );

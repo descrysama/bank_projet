@@ -18,11 +18,16 @@ const Login = () => {
           password: e.target.password.value,
         }).then((response) => {
           if (response.status == 200) {
-            console.log(response.data.api_token)
+            localStorage.setItem('session_token', response.data.api_token);
+            navigate('/dashboard');
           }
-        }).catch((error) => {
-          setStatus(error.response.data.message);
-        });
+        }).catch((response) => {
+          if (response.response.data.message) {
+            setStatus(response.response.data.message);
+          } else {
+            setStatus("Email ou mot de passe incorrect");
+          }
+        })
       } else {
         // ERROR
         setStatus('Erreur Formulaire');

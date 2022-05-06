@@ -6,15 +6,13 @@ import 'bootstrap/js/dist/collapse';
 
 
 
-const Navbar = () => {
-
-    const [isAuth, setisAuth] = useState(false);
+const Navbar = ({isAuth}) => {
 
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
         <div className="container-fluid">
-            <a className="navbar-brand" >Navbar</a>
+            <NavLink className="navbar-brand" to="/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Budget_logo.svg/1200px-Budget_logo.svg.png" style={{width:"10rem"}} alt="" /></NavLink>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
             </button>
