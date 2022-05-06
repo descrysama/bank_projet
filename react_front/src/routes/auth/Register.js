@@ -26,7 +26,7 @@ const Register = () => {
       });
     } else {
       // ERROR
-      console.log('error dans le form')
+      setStatus('Erreur Formulaire');
     }
     
     
