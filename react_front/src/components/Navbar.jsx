@@ -1,5 +1,4 @@
-import { NavLink, Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import 'bootswatch/dist/lux/bootstrap.min.css';
 import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/js/dist/collapse';
@@ -7,6 +6,14 @@ import 'bootstrap/js/dist/collapse';
 
 
 const Navbar = ({isAuth}) => {
+    let navigate = useNavigate();
+    
+    const Logout = () => {
+        localStorage.removeItem('session_token');
+        navigate('/login');
+        window.location.reload();
+
+    }
 
 
   return (
@@ -20,14 +27,21 @@ const Navbar = ({isAuth}) => {
             <div className="collapse navbar-collapse" id="navbarColor01">
             {isAuth == true ? 
             
-            <ul className="navbar-nav me-auto">
-                <li className="nav-item">
-                    <NavLink className="nav-link" to="/">Home</NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink className="nav-link" to="/transactions">Transactions</NavLink>
-                </li>   
-            </ul>
+            <>
+                <ul className="navbar-nav me-auto">
+                    <li className="nav-item">
+                        <NavLink className="nav-link" to="/dashboard">Home</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink className="nav-link" to="/transactions">Transactions</NavLink>
+                    </li>   
+                </ul>
+                <ul className="w-100 d-flex justify-content-end align-items-center m-0">
+                    <li className="btn btn-secondary m-2" onClick={Logout}>Logout</li>
+                </ul>
+            </>
+            
+
             : null}
             {isAuth == false ?
             

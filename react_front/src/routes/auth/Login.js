@@ -3,13 +3,11 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Alert from '../../components/Alert';
 
-
-
 const Login = () => {
 
     let navigate = useNavigate();
     const [Status, setStatus] = useState();
-
+  
     const SubmitHandler = (e) => {
       e.preventDefault();
       if (e.target.email.value && e.target.password.value) {
@@ -20,6 +18,7 @@ const Login = () => {
           if (response.status == 200) {
             localStorage.setItem('session_token', response.data.api_token);
             navigate('/dashboard');
+            window.location.reload();
           }
         }).catch((response) => {
           if (response.response.data.message) {
