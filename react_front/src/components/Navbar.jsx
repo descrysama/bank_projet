@@ -30,9 +30,6 @@ const Navbar = ({isAuth}) => {
             <>
                 <ul className="navbar-nav me-auto">
                     <li className="nav-item">
-                        <NavLink className="nav-link" to="/dashboard">Home</NavLink>
-                    </li>
-                    <li className="nav-item">
                         <NavLink className="nav-link" to="/transactions">Transactions</NavLink>
                     </li>   
                 </ul>
