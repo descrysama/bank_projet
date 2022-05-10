@@ -2,11 +2,21 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import 'bootswatch/dist/lux/bootstrap.min.css';
 import 'bootstrap/js/dist/dropdown';
 import 'bootstrap/js/dist/collapse';
+import { useEffect, useState } from "react";
+import axios from "axios";
 
+const token = localStorage.getItem('session_token');
 
-
-const Navbar = ({isAuth}) => {
+const Navbar = () => {
     let navigate = useNavigate();
+
+
+    const [isAuth, setIsAuth] = useState();
+    
+    useEffect(()=> {
+        axios.get(`${process.env.REACT_APP_API_URL}user/${token}`).then((response) => response.data.status == true ? setIsAuth(response.data.status) : null);
+    })
+
     
     const Logout = () => {
         localStorage.removeItem('session_token');
@@ -14,6 +24,7 @@ const Navbar = ({isAuth}) => {
         window.location.reload();
 
     }
+
 
 
   return (
