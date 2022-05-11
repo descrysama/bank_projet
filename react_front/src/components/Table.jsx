@@ -1,6 +1,6 @@
 const Table = () => {
     return (
-        <table class="table table-hover">
+        <table className="table table-hover">
             <thead>
                 <tr>
                 <th scope="col">Montant</th>
@@ -16,7 +16,7 @@ const Table = () => {
                     <td>Column content</td>
                     <td>Column content</td>
                     <td>Column content</td>
-                    <td><i class="fa-solid fa-trash"></i></td>
+                    <td><i className="fa-solid fa-trash"></i></td>
                 </tr>
             </tbody>
         </table>
