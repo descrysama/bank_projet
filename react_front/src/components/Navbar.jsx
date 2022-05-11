@@ -43,6 +43,9 @@ const Navbar = () => {
                     <li className="nav-item">
                         <NavLink className="nav-link" to="/transactions">Transactions</NavLink>
                     </li>   
+                    <li className="nav-item">
+                        <NavLink className="nav-link" to="/settings">Settings</NavLink>
+                    </li>   
                 </ul>
                 <ul className="w-100 d-flex justify-content-end align-items-center m-0">
                     <li className="btn btn-secondary m-2" onClick={Logout}>Logout</li>
