@@ -7,15 +7,9 @@ import axios from "axios";
 
 const token = localStorage.getItem('session_token');
 
-const Navbar = () => {
+const Navbar = ({isAuth}) => {
+
     let navigate = useNavigate();
-
-
-    const [isAuth, setIsAuth] = useState();
-    
-    useEffect(()=> {
-        axios.get(`${process.env.REACT_APP_API_URL}user/${token}`).then((response) => response.data.status == true ? setIsAuth(response.data.status) : null);
-    })
 
     
     const Logout = () => {
@@ -36,7 +30,7 @@ const Navbar = () => {
             </button>
 
             <div className="collapse navbar-collapse" id="navbarColor01">
-            {isAuth == true ? 
+            {isAuth === true ? 
             
             <>
                 <ul className="navbar-nav me-auto">
@@ -53,15 +47,12 @@ const Navbar = () => {
             </>
             
 
-            : null}
-            {isAuth == false ?
-            
+            : 
             <ul className="w-100 d-flex justify-content-end align-items-center m-0">
                 <Link className="btn btn-secondary m-2" to="/login">Login</Link>
                 <Link className="btn btn-secondary m-2" to="/register">Register</Link>
             </ul>
-
-            : null}
+            }
             </div>
         </div>
     </nav>

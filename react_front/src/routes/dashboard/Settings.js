@@ -10,8 +10,8 @@ const Settings = () => {
             <div className="w-50 row">
                 <h3>Planfond Actuel : {plafond}€</h3>
                 <form onSubmit={console.log}>
-                    <input type="text" class="form-control m-2" name="plafond" aria-describedby="emailHelp" placeholder="Plafond"></input>
-                    <button type="button" class="btn btn-success m-2">Valider</button>
+                    <input type="text" className="form-control m-2" name="plafond" aria-describedby="emailHelp" placeholder="Plafond"></input>
+                    <button type="button" className="btn btn-success m-2">Valider</button>
                 </form>
             </div>
         </div>

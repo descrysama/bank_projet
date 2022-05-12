@@ -1,24 +1,29 @@
 import Table from "../../components/Table";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import Alert from '../../components/Alert';
+import { Navigate, useNavigate } from "react-router-dom";
 
 let token = localStorage.getItem('session_token')
 
 const Transactions = () => {
 
+
     const [solde, setSolde] = useState(0);
     const [plafond, setPlafond] = useState(0);
-    const [accountStatus, setAccountStatus] = useState([]);
+    const [accountStatus, setAccountStatus] = useState();
+    const [accountNumber, setAccountNumber] = useState();
     const [Status, setStatus] = useState();
+    let navigate = useNavigate();
 
     if (token) {
         axios.get(`${process.env.REACT_APP_API_URL}user/checkaccount/${token}`)
         .then((response) => {
-            setAccountStatus(response.data.account_number);
+            setAccountStatus(response.data.data);
+            setAccountNumber(response.data.account_number);
             setSolde(response.data.balance);
             setPlafond(response.data.spent_limit);
-            console.log(response.data)
+            console.log(response.data.data)
         });
     }
 
@@ -31,6 +36,7 @@ const Transactions = () => {
             balance: e.target.balance.value,
             spent_limit: e.target.spent_limit.value
           });
+          navigate('/transactions');
           setStatus();
         } else {
           // ERROR
@@ -55,7 +61,7 @@ const Transactions = () => {
                 </div>
         :
         <>
-            <h1>Compte : {accountStatus ? accountStatus : null}</h1>
+            <h1>Compte : {accountNumber ? accountNumber : null}</h1>
             <h3 className={solde > 0 ? "text-success" : "text-danger"}><span className="text-dark">Solde :</span> {solde}€</h3>
             <h3><span className="text-dark">Plafond :</span> {plafond}€</h3>
             <div className="row">
