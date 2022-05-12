@@ -8,7 +8,7 @@ let token = localStorage.getItem('session_token')
 
 const Transactions = () => {
 
-
+    const [Loading, setLoading] = useState(true);
     const [solde, setSolde] = useState(0);
     const [plafond, setPlafond] = useState(0);
     const [accountStatus, setAccountStatus] = useState();
@@ -23,6 +23,7 @@ const Transactions = () => {
             setAccountNumber(response.data.account_number);
             setSolde(response.data.balance);
             setPlafond(response.data.spent_limit);
+            setLoading(false);
             console.log(response.data.data)
         });
     }
@@ -49,7 +50,10 @@ const Transactions = () => {
 
     return (
         <div className="d-flex flex-column w-100 justify-content-center align-items-center text-center p-5">
-        {accountStatus == false ? 
+        { Loading == true ?
+            <i class="fas fa-circle-notch fa-spin fa-5x"></i>
+        :
+            accountStatus == false ? 
                 <div className="w-50 row">
                     <h3>Créer un compte :</h3>
                     {Status != null ? <Alert alert={Status}/> : null}
@@ -69,6 +73,7 @@ const Transactions = () => {
             </div>
         <Table/>
         </>
+
         }
         </div>
     )

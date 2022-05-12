@@ -17,7 +17,7 @@ const Login = () => {
         }).then((response) => {
           if (response.status == 200) {
             localStorage.setItem('session_token', response.data.api_token);
-            navigate('/transaction');
+            navigate('/transactions');
             window.location.reload();
           }
         }).catch((response) => {
