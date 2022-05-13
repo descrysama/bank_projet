@@ -2,7 +2,7 @@ import Table from "../../components/Table";
 import { useState } from "react";
 import axios from "axios";
 import Alert from '../../components/Alert';
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 let token = localStorage.getItem('session_token')
 
@@ -24,7 +24,7 @@ const Transactions = () => {
             setSolde(response.data.balance);
             setPlafond(response.data.spent_limit);
             setLoading(false);
-            console.log(response.data.data)
+            console.log(response.data.account_number)
         });
     }
 
@@ -51,15 +51,15 @@ const Transactions = () => {
     return (
         <div className="d-flex flex-column w-100 justify-content-center align-items-center text-center p-5">
         { Loading == true ?
-            <i class="fas fa-circle-notch fa-spin fa-5x"></i>
+            <i className="fas fa-circle-notch fa-spin fa-5x"></i>
         :
             accountStatus == false ? 
                 <div className="w-50 row">
                     <h3>Créer un compte :</h3>
                     {Status != null ? <Alert alert={Status}/> : null}
                     <form onSubmit={(e) => SubmitHandler(e)}>
-                        <input type="text" className="form-control m-2" name="spent_limit" aria-describedby="emailHelp" placeholder="Plafond"></input>
-                        <input type="text" className="form-control m-2" name="balance" aria-describedby="emailHelp" placeholder="Solde"></input>
+                        <input type="text" className="form-control m-2" name="spent_limit" placeholder="Plafond"></input>
+                        <input type="text" className="form-control m-2" name="balance" placeholder="Solde"></input>
                         <input type="submit" className="btn btn-success m-2"/>
                     </form>
                 </div>
