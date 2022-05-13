@@ -27,4 +27,5 @@ Route::middleware(['cors'])->group(function () {
     Route::get('user/checkaccount/{token}', [UserController::class, 'accountchecker']);
     Route::post('user/createaccount/{token}', [UserController::class, 'createAccount']);
     Route::get('user/getaccount/{token}', [UserController::class, 'getAccount']);
+    Route::post('user/updateaccount/{token}', [UserController::class, 'updateAccount']);
 });

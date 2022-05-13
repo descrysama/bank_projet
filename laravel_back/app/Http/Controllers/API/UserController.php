@@ -75,5 +75,20 @@ class UserController extends Controller
         }
     }
 
+    function updateAccount(Request $request, $token)
+    {
+        $user = User::where('api_token', $token)->first();
+        if ($user && $user->account_number) {
+            $account = Account::where('account_number', $user->account_number)->first();
+            $account->spent_limit = $request->spent_limit;
+            $account->save();
+            return response()->json([
+                'data' => true,
+                'message' => 'Account updated successfully',
+                'account_data' => $account
+            ]);
+        }
+    }
+
 
 }
