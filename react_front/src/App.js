@@ -6,13 +6,16 @@ import Login from "./routes/auth/Login";
 import Register from "./routes/auth/Register";
 import ProtectedRoute from "./ProtectedRoute";
 import axios from 'axios';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 let token = localStorage.getItem('session_token');
 
 function App() {
   
-  axios.get(`${process.env.REACT_APP_API_URL}user/${token}`).then((response) => response.data.status ? setisAuth(response.data.status) : null);
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_URL}user/${token}`).then((response) => response.data.status ? setisAuth(response.data.status) : null);
+  
+  }, [])
   const [isAuth, setisAuth] = useState(false);
   if (isAuth !== undefined) {
     return (
