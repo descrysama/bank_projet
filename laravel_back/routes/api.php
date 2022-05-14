@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\API\LoginController;
+use App\Http\Controllers\API\TransactionController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,9 +24,14 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['cors'])->group(function () {
     Route::post('register', [RegisterController::class, 'store']);
     Route::post('login', [LoginController::class, 'login']);
+
     Route::get('user/{token}', [AuthController::class, 'index']);
+    Route::get('user/getaccount/{token}', [UserController::class, 'getAccount']);
     Route::get('user/checkaccount/{token}', [UserController::class, 'accountchecker']);
     Route::post('user/createaccount/{token}', [UserController::class, 'createAccount']);
-    Route::get('user/getaccount/{token}', [UserController::class, 'getAccount']);
     Route::post('user/updateaccount/{token}', [UserController::class, 'updateAccount']);
+
+    Route::get('transaction/getlist/{token}', [TransactionController::class, 'index']);
+    Route::post('transaction/store/{token}', [TransactionController::class, 'store']);
+
 });

@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Account;
-
-
+use App\Models\Transaction;
 
 class UserController extends Controller
 {
@@ -75,7 +74,7 @@ class UserController extends Controller
         }
     }
 
-    function updateAccount(Request $request, $token)
+    public function updateAccount(Request $request, $token)
     {
         $user = User::where('api_token', $token)->first();
         if ($user && $user->account_number) {
