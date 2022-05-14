@@ -1,4 +1,6 @@
-const Table = () => {
+import { useState } from "react";
+
+const Table = ({operations}) => {
     return (
         <table className="table table-hover">
             <thead>
@@ -11,13 +13,15 @@ const Table = () => {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Default</th>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                    <td>Column content</td>
-                    <td><i className="fa-solid fa-trash"></i></td>
-                </tr>
+                {operations.map((operation) => 
+                    <tr>
+                        <td style={operation.amount < 0 ? {color: 'red'} : {color: '#1FA519'}}>{operation.amount}€</td>
+                        <td>{operation.operation_type}</td>
+                        <td>{operation.account_number}</td>
+                        <td>{operation.operation_detail}</td>
+                        <td><i className="fa-solid fa-trash"></i></td>
+                    </tr>
+                )}
             </tbody>
         </table>
     )
