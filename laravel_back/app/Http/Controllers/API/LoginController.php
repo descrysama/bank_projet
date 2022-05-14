@@ -18,9 +18,9 @@ class LoginController extends Controller
             'password' => 'required|string|min:6'
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', strtolower($request->email))->first();
 
-        if ($user->email == $request->email && Hash::check($request->password, $user->password)) {
+        if ($user->email == strtolower($request->email) && Hash::check($request->password, $user->password)) {
             $user->api_token = Str::random(80);
             $user->save();
             return response()->json($user, 200);

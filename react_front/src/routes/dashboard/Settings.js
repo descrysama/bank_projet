@@ -8,6 +8,7 @@ let token = localStorage.getItem('session_token');
 const Settings = () => {
 
     const [plafond, setPlafond] = useState(0);
+    const [solde, setSolde] = useState(0)
     const [Loading, setLoading] = useState(true);
     const [accountNumber, setAccountNumber] = useState();
     const [Status, setStatus] = useState();
@@ -17,6 +18,7 @@ const Settings = () => {
         axios.get(`${process.env.REACT_APP_API_URL}user/checkaccount/${token}`)
         .then((response) => {
             setPlafond(response.data.spent_limit);
+            setSolde(response.data.balance)
             setAccountNumber(response.data.account_number);
             setLoading(false);
         });
@@ -24,9 +26,10 @@ const Settings = () => {
 
     const SubmitHandler = (e) => {
         e.preventDefault();
-        if (e.target.spent_limit.value) {
+        if (e.target.spent_limit.value && e.target.balance.value) {
           axios.post(`${process.env.REACT_APP_API_URL}user/updateaccount/${token}`, {
-            spent_limit: e.target.spent_limit.value
+            spent_limit: e.target.spent_limit.value,
+            balance: e.target.balance.value
           });
           navigate('/transactions');
           setStatus();
@@ -47,15 +50,16 @@ const Settings = () => {
                     <div className="w-50 row">
                     {Status != null ? <Alert alert={Status}/> : null}
                         <h3>Plafond Actuel : {plafond}€</h3>
+                        <h3>Solde Actuel : {solde}€</h3>
                         <form onSubmit={(e) => SubmitHandler(e)}>
                             <input type="text" className="form-control m-2" name="spent_limit" aria-describedby="emailHelp" placeholder="Plafond"></input>
+                            <input type="text" className="form-control m-2" name="balance" aria-describedby="emailHelp" placeholder="Solde (mode tricheur ^^)"></input>
                             <button type="submit" className="btn btn-success m-2">Valider</button>
                         </form>
                     </div>
                 </>
                 :
                 <h3>Veuillez Créer un compte dans l'espace <Link to="/transactions" style={{color: "purple"}}>Transactions.</Link></h3>
-
             }
         </div>
     )

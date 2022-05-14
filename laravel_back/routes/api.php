@@ -33,5 +33,6 @@ Route::middleware(['cors'])->group(function () {
 
     Route::get('transaction/getlist/{token}', [TransactionController::class, 'index']);
     Route::post('transaction/store/{token}', [TransactionController::class, 'store']);
+    Route::get('transaction/delete/{token}/{id}', [TransactionController::class, 'delete']);
 
 });
