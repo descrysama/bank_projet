@@ -1,5 +1,5 @@
 import Table from "../../components/Table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Alert from '../../components/Alert';
 import { useNavigate } from "react-router-dom";
@@ -14,32 +14,41 @@ const Transactions = () => {
     const [accountStatus, setAccountStatus] = useState();
     const [accountNumber, setAccountNumber] = useState();
     const [Status, setStatus] = useState();
+    const [operations, setOperations] = useState([]);
     let navigate = useNavigate();
 
-    if (token) {
-        axios.get(`${process.env.REACT_APP_API_URL}user/checkaccount/${token}`)
-        .then((response) => {
-            setAccountStatus(response.data.data);
-            setAccountNumber(response.data.account_number);
-            setSolde(response.data.balance);
-            setPlafond(response.data.spent_limit);
-            setLoading(false);
-            console.log(response.data.account_number)
-        });
-    }
+    useEffect(() => {
+        if (token) {
+            axios.get(`${process.env.REACT_APP_API_URL}user/checkaccount/${token}`)
+            .then((response) => {
+                setAccountStatus(response.data.data);
+                setAccountNumber(response.data.account_number);
+                setSolde(response.data.balance);
+                setPlafond(response.data.spent_limit);
+            });
+        }
+    
+        if (token) {
+            axios.get(`${process.env.REACT_APP_API_URL}transaction/getlist/${token}`)
+            .then((response) => {
+                setOperations(response.data.data);
+                setLoading(false);
+            })
+        }
+    }, [])
 
 
 
     const SubmitHandler = (e) => {
-        e.preventDefault();
         if (e.target.balance.value && e.target.spent_limit.value) {
           axios.post(`${process.env.REACT_APP_API_URL}user/createaccount/${token}`, {
             balance: e.target.balance.value,
             spent_limit: e.target.spent_limit.value
           });
-          navigate('/transactions');
           setStatus();
+          
         } else {
+            e.preventDefault();
           // ERROR
           setStatus('Erreur Formulaire');
         }
@@ -69,9 +78,9 @@ const Transactions = () => {
             <h3 className={solde > 0 ? "text-success" : "text-danger"}><span className="text-dark">Solde :</span> {solde}€</h3>
             <h3><span className="text-dark">Plafond :</span> {plafond}€</h3>
             <div className="row">
-                <button type="button" className="btn btn-success"><i className="fa-solid fa-plus"></i></button>
+                <button type="button" className="btn btn-success">Opération <i className="fa-solid fa-plus"></i></button>
             </div>
-        <Table/>
+            <Table operations={operations}/>
         </>
 
         }
