@@ -84,9 +84,7 @@ const Transactions = () => {
     const AddOpeSubmit = async (e) => {
         e.preventDefault();
         if (e.target.operationtype.value && e.target.operationdetail.value && e.target.amount.value && e.target.operator.value) {
-            if (Math.abs(sum) < plafond) {
-                console.log(sum, ' ',plafond)
-                console.log(Math.abs(sum), ' ',plafond)
+            if (e.target.operator.value != 'minus') {
                 let response = await axios.post(`${process.env.REACT_APP_API_URL}transaction/store/${token}`, {
                     amount: e.target.amount.value,
                     operation_type: e.target.operationtype.value,
@@ -96,8 +94,7 @@ const Transactions = () => {
                 setStatus();
                 let newOperations = [...operations];
                 newOperations.unshift(response.data.data);
-                console.log(response.data.data);
-                console.log(JSON.stringify(e.target.amount.value))
+
                 setOperations(newOperations);
                 if (e.target.operator.value == 'minus') {
                     setSolde(parseInt(solde) - parseInt(e.target.amount.value));
@@ -107,7 +104,27 @@ const Transactions = () => {
                 } else {
                     setSolde(parseInt(solde) + parseInt(e.target.amount.value));
                 }
-            } else {
+            } else if (Math.abs(sum) < plafond){
+                let response = await axios.post(`${process.env.REACT_APP_API_URL}transaction/store/${token}`, {
+                    amount: e.target.amount.value,
+                    operation_type: e.target.operationtype.value,
+                    description: e.target.operationdetail.value,
+                    operator: e.target.operator.value
+                });
+                setStatus();
+                let newOperations = [...operations];
+                newOperations.unshift(response.data.data);
+
+                setOperations(newOperations);
+                if (e.target.operator.value == 'minus') {
+                    setSolde(parseInt(solde) - parseInt(e.target.amount.value));
+                    setSum(parseInt(sum) - parseInt(e.target.amount.value));
+                } else if (e.target.operator.value == 'plus') {
+                    setSolde(parseInt(solde) + parseInt(e.target.amount.value));
+                } else {
+                    setSolde(parseInt(solde) + parseInt(e.target.amount.value));
+                }
+            }else {
                 setStatus('Plafond Atteint');
             }
           handleClose();

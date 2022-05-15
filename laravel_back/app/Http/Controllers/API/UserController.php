@@ -80,7 +80,9 @@ class UserController extends Controller
         if ($user && $user->account_number) {
             $account = Account::where('account_number', $user->account_number)->first();
             $account->spent_limit = $request->spent_limit;
-            $account->balance = $request->balance;
+            if ($request->balance) {
+                $account->balance = $request->balance;
+            }
             $account->save();
             return response()->json([
                 'data' => true,

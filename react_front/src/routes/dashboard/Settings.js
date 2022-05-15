@@ -26,7 +26,7 @@ const Settings = () => {
 
     const SubmitHandler = (e) => {
         e.preventDefault();
-        if (e.target.spent_limit.value && e.target.balance.value) {
+        if (e.target.spent_limit.value) {
           axios.post(`${process.env.REACT_APP_API_URL}user/updateaccount/${token}`, {
             spent_limit: e.target.spent_limit.value,
             balance: e.target.balance.value
