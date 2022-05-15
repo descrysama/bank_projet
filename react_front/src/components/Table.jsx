@@ -4,7 +4,7 @@ import Alert from './Alert';
 import  {useState}  from 'react';
 let token = localStorage.getItem('session_token');
 
-const Table = ({operations, setOperations, solde, setSolde}) => {
+const Table = ({operations, setOperations, solde, setSolde, sum, setSum}) => {
 
     const [Status, setStatus] = useState();
     const [Alert, setAlert] = useState(false);
@@ -17,6 +17,11 @@ const Table = ({operations, setOperations, solde, setSolde}) => {
             newOperations.splice(i, 1);
             setOperations(newOperations);
             setSolde(solde - amount);
+            let split = JSON.stringify(amount).split('');
+            
+            if (split[0] == '-'){
+                setSum(sum - amount);
+            }
         }
     }
 

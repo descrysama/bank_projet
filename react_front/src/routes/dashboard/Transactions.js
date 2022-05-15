@@ -32,10 +32,15 @@ const Transactions = () => {
                 if (response.data.data.length > 0 ) {
                     let SumArray = [];
                 response.data.data.map((operation) => {
-                    SumArray.push(operation.amount);
+                    let split = JSON.stringify(operation.amount).split('');
+                    if (split[0] == '-'){
+                        SumArray.push(operation.amount);
+                    }
                 });
-                let Sum = SumArray.reduce((Prev,RnValue) => Prev + RnValue);
-                setSum(Sum);
+                if (SumArray.length > 0) {
+                    let Sum = SumArray.reduce((Prev,RnValue) => Prev + RnValue);
+                    setSum(Sum);
+                }
                 }
                 setLoading(false);
             })
@@ -79,7 +84,9 @@ const Transactions = () => {
     const AddOpeSubmit = async (e) => {
         e.preventDefault();
         if (e.target.operationtype.value && e.target.operationdetail.value && e.target.amount.value && e.target.operator.value) {
-            if (sum < plafond) {
+            if (Math.abs(sum) < plafond) {
+                console.log(sum, ' ',plafond)
+                console.log(Math.abs(sum), ' ',plafond)
                 let response = await axios.post(`${process.env.REACT_APP_API_URL}transaction/store/${token}`, {
                     amount: e.target.amount.value,
                     operation_type: e.target.operationtype.value,
@@ -89,10 +96,12 @@ const Transactions = () => {
                 setStatus();
                 let newOperations = [...operations];
                 newOperations.unshift(response.data.data);
-                console.log(e.target.amount.value);
+                console.log(response.data.data);
+                console.log(JSON.stringify(e.target.amount.value))
                 setOperations(newOperations);
                 if (e.target.operator.value == 'minus') {
                     setSolde(parseInt(solde) - parseInt(e.target.amount.value));
+                    setSum(parseInt(sum) - parseInt(e.target.amount.value));
                 } else if (e.target.operator.value == 'plus') {
                     setSolde(parseInt(solde) + parseInt(e.target.amount.value));
                 } else {
@@ -134,6 +143,7 @@ const Transactions = () => {
             <h1>Compte : {accountNumber ? accountNumber : null}</h1>
             <h3 className={solde >= 0 ? "text-success" : "text-danger"}><span className="text-dark">Solde :</span> {solde}€</h3>
             <h3><span className="text-dark">Plafond :</span> {plafond}€</h3>
+            <h3><span className="text-dark">Total Dépenses :</span> {Math.abs(sum)}€</h3>
             <div className="row">
                 <Button type="button" className="btn btn-success m-2" onClick={handleShow}>Opération <i className="fa-solid fa-plus"></i></Button>
             </div>
@@ -166,7 +176,7 @@ const Transactions = () => {
                     </Modal.Footer>
                 </form>
             </Modal>
-            <Table operations={operations} setOperations={setOperations} solde={solde} setSolde={setSolde}/>
+            <Table operations={operations} setOperations={setOperations} solde={solde} setSolde={setSolde} sum={sum} setSum={setSum}/>
         </>
 
         }
