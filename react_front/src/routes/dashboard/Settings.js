@@ -41,7 +41,7 @@ const Settings = () => {
 
     return (
         <div className="d-flex flex-column w-100 justify-content-center align-items-center text-center p-5">
-            {Loading == true ?
+            {Loading === true ?
                 <i className="fas fa-circle-notch fa-spin fa-5x"></i>
             :
                 accountNumber ?

@@ -2,7 +2,6 @@ import Table from "../../components/Table";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Alert from '../../components/Alert';
-import { useNavigate } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
 
@@ -33,9 +32,10 @@ const Transactions = () => {
                     let SumArray = [];
                 response.data.data.map((operation) => {
                     let split = JSON.stringify(operation.amount).split('');
-                    if (split[0] == '-'){
+                    if (split[0] === '-'){
                         SumArray.push(operation.amount);
                     }
+                    
                 });
                 if (SumArray.length > 0) {
                     let Sum = SumArray.reduce((Prev,RnValue) => Prev + RnValue);
@@ -84,7 +84,7 @@ const Transactions = () => {
     const AddOpeSubmit = async (e) => {
         e.preventDefault();
         if (e.target.operationtype.value && e.target.operationdetail.value && e.target.amount.value && e.target.operator.value) {
-            if (e.target.operator.value != 'minus') {
+            if (e.target.operator.value !== 'minus') {
                 let response = await axios.post(`${process.env.REACT_APP_API_URL}transaction/store/${token}`, {
                     amount: e.target.amount.value,
                     operation_type: e.target.operationtype.value,
@@ -96,10 +96,10 @@ const Transactions = () => {
                 newOperations.unshift(response.data.data);
 
                 setOperations(newOperations);
-                if (e.target.operator.value == 'minus') {
+                if (e.target.operator.value === 'minus') {
                     setSolde(parseInt(solde) - parseInt(e.target.amount.value));
                     setSum(parseInt(sum) - parseInt(e.target.amount.value));
-                } else if (e.target.operator.value == 'plus') {
+                } else if (e.target.operator.value === 'plus') {
                     setSolde(parseInt(solde) + parseInt(e.target.amount.value));
                 } else {
                     setSolde(parseInt(solde) + parseInt(e.target.amount.value));
@@ -116,10 +116,10 @@ const Transactions = () => {
                 newOperations.unshift(response.data.data);
 
                 setOperations(newOperations);
-                if (e.target.operator.value == 'minus') {
+                if (e.target.operator.value === 'minus') {
                     setSolde(parseInt(solde) - parseInt(e.target.amount.value));
                     setSum(parseInt(sum) - parseInt(e.target.amount.value));
-                } else if (e.target.operator.value == 'plus') {
+                } else if (e.target.operator.value === 'plus') {
                     setSolde(parseInt(solde) + parseInt(e.target.amount.value));
                 } else {
                     setSolde(parseInt(solde) + parseInt(e.target.amount.value));
@@ -141,10 +141,10 @@ const Transactions = () => {
 
     return (
         <div className="d-flex flex-column w-100 justify-content-center align-items-center text-center p-5">
-        { Loading == true ?
+        { Loading === true ?
             <i className="fas fa-circle-notch fa-spin fa-5x"></i>
         :
-            accountStatus == false ? 
+            accountStatus === false ? 
                 <div className="w-50 row">
                     <h3>Créer un compte :</h3>
                     {Status != null ? <Alert alert={Status}/> : null}
@@ -160,7 +160,7 @@ const Transactions = () => {
             <h1>Compte : {accountNumber ? accountNumber : null}</h1>
             <h3 className={solde >= 0 ? "text-success" : "text-danger"}><span className="text-dark">Solde :</span> {solde}€</h3>
             <h3><span className="text-dark">Plafond :</span> {plafond}€</h3>
-            <h3><span className="text-dark">Total Dépenses :</span> {Math.abs(sum)}€</h3>
+            <h3 className={Math.abs(sum) >= plafond ? "text-danger" : "text-success"}><span className="text-dark">Total Dépenses (enregistrées) :</span> {Math.abs(sum)}€</h3>
             <div className="row">
                 <Button type="button" className="btn btn-success m-2" onClick={handleShow}>Opération <i className="fa-solid fa-plus"></i></Button>
             </div>

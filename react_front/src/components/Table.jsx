@@ -1,13 +1,12 @@
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
-import Alert from './Alert';
 import  {useState}  from 'react';
 let token = localStorage.getItem('session_token');
 
 const Table = ({operations, setOperations, solde, setSolde, sum, setSum}) => {
 
-    const [Status, setStatus] = useState();
-    const [Alert, setAlert] = useState(false);
+    const [Status] = useState();
+    const [Alert] = useState(false);
 
 
     const DeleteTransaction = (id, i, amount) => {
@@ -19,7 +18,7 @@ const Table = ({operations, setOperations, solde, setSolde, sum, setSum}) => {
             setSolde(solde - amount);
             let split = JSON.stringify(amount).split('');
             
-            if (split[0] == '-'){
+            if (split[0] === '-'){
                 setSum(sum - amount);
             }
         }
@@ -28,7 +27,7 @@ const Table = ({operations, setOperations, solde, setSolde, sum, setSum}) => {
 
     return (
         <>
-        <table className="table table-hover">
+        <table className="table table-hover w-50">
         {Status != null ? <Alert alert={Alert}/> : null}
             <thead>
                 <tr>
