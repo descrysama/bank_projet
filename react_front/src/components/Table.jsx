@@ -15,7 +15,7 @@ const Table = ({operations, setOperations, solde, setSolde, sum, setSum}) => {
             let newOperations = [...operations];
             newOperations.splice(i, 1);
             setOperations(newOperations);
-            setSolde(solde - amount);
+            setSolde(solde - amount);   
             setSum(sum - amount);
         }
     }
