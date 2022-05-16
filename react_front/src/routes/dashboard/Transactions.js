@@ -104,7 +104,7 @@ const Transactions = () => {
                 } else {
                     setSolde(parseInt(solde) + parseInt(e.target.amount.value));
                 }
-            } else if (Math.abs(sum) < plafond){
+            } else if (Math.abs(sum) + e.target.amount.value <= plafond){
                 let response = await axios.post(`${process.env.REACT_APP_API_URL}transaction/store/${token}`, {
                     amount: e.target.amount.value,
                     operation_type: e.target.operationtype.value,
