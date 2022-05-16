@@ -16,11 +16,7 @@ const Table = ({operations, setOperations, solde, setSolde, sum, setSum}) => {
             newOperations.splice(i, 1);
             setOperations(newOperations);
             setSolde(solde - amount);
-            let split = JSON.stringify(amount).split('');
-            
-            if (split[0] === '-'){
-                setSum(sum - amount);
-            }
+            setSum(sum - amount);
         }
     }
 
