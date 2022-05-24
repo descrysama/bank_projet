@@ -125,7 +125,6 @@ const Transactions = () => {
                     setSolde(parseInt(solde) + parseInt(e.target.amount.value));
                 }
             }else {
-                console.log(Math.abs(sum) + parseInt(e.target.amount.value), '-' , plafond)
                 setStatus('Plafond Atteint');
             }
           handleClose();
